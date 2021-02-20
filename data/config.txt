@@ -1,0 +1,4 @@
+prodcons=4
+productos=7
+buzonprod=4
+buzoncons=3
