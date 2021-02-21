@@ -5,36 +5,37 @@ public class Intermediario1 extends Thread
 	private BuzonProductor bp;
 	private BuzonIntermedio bi;
 	
-	public Intermediario1(BuzonProductor buffer, BuzonIntermedio bi) 
+	public Intermediario1(BuzonProductor bp, BuzonIntermedio bi) 
 	{
-		// TODO Auto-generated constructor stub
-		this.bp = buffer;
+		// DONE Auto-generated constructor stub
+		this.bp = bp;
 		this.bi=bi;
 	}
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		if (bp.obtenerClientesActuales() != 0)
+		// DONE Auto-generated method stub
+		if (bp.obtenerProductosActuales() != 8)
 		{
-			procesarMensaje();
+			procesarProducto();
 		}
+		
 	}
 	
-	private void procesarMensaje()
+	private void procesarProducto()
 	{
-		Producto m = bp.obtenerMensaje();
+		Producto m = bp.obtenerProducto();
 		
 		if(m != null)
 		{
 			synchronized (m) {
-				if(bi.almacenarMensaje(m))
+				if(bi.almacenarProducto(m))
 				{
 					try {
-						System.out.println("INTER1 entregado");
+						System.out.println("INTERMEDIARIO1 entregado");
 						m.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						// DONE Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

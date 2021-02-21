@@ -1,14 +1,10 @@
 package prueba;
 
-import java.util.LinkedList;
-
 public class BuzonIntermedio 
 {
 	private int capacidad=1;
 	
-	private int clientes=1;
-
-	private Producto mensaje;
+	private Producto producto;
 	
 	public BuzonIntermedio() 
 	{
@@ -16,36 +12,35 @@ public class BuzonIntermedio
 		
 	}
 	
-	public synchronized boolean almacenarMensaje(Producto m)
+	public synchronized boolean almacenarProducto(Producto m)
 	{
 		
-		capacidad--;
-		if(capacidad < 0)
+		
+		if(capacidad <= 0)
 		{
-			System.out.println("BI Capacidad Excedida, buffer lleno");
+			System.out.println("Buzon Intermedio Capacidad Excedida, buzón  lleno");
 			return false;
 		}
 		else
 		{
-			System.out.println("BI Mensaje almacenado, espera por procesar");
-			this.mensaje=m;
+			System.out.println("Buzon Intermedio Mensaje almacenado, espera por procesar");
+			this.producto=m;
+			capacidad--;
 			return true;
 		}
 	}
 	
-	public synchronized Producto obtenerMensaje()
+	public synchronized Producto obtenerProducto()
 	{
-		return this.mensaje;
+		capacidad++;
+		return this.producto;
 	}
 	
-	public synchronized void anunciarRetiro()
-	{
-		clientes--;
-	}
+
 	
-	public synchronized int obtenerClientesActuales()
+	public synchronized int obtenerProductosActuales()
 	{
-		System.out.println("BI en linea: " + this.clientes);
-		return this.clientes;
+		System.out.println("BI en linea: " + capacidad);
+		return capacidad;
 	}
 }

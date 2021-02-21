@@ -5,34 +5,39 @@ public class Consumidor extends Thread
 	private BuzonConsumidor bc;
 	private char tipo;
 	
-	public Consumidor(BuzonConsumidor buffer, char tipo) 
+	public Consumidor(BuzonConsumidor buzonConsumidor, char tipo) 
 	{
-		// TODO Auto-generated constructor stub
-		this.bc = buffer;
+		// DONE Auto-generated constructor stub
+		this.bc = buzonConsumidor;
 		this.tipo=tipo;
 	}
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		while (bc.obtenerClientesActuales() != 0 && bc.getLista()!=0)
+		// DONE Auto-generated method stub
+		while (bc.obtenerProductosActuales() != 0)
 		{
-			procesarMensaje();
+			recibirProducto();
 		}
 	}
 	
-	private void procesarMensaje()
+	private void recibirProducto()
 	{
-		Producto m = bc.obtenerMensaje();
+		Producto m = bc.obtenerProducto();
 		
 		if(m != null)
 		{
-			if(m.getMensaje()==tipo)
+			if(m.getTipo()==tipo)
 			{
 				synchronized (m) {
 					System.out.println("CONSUM Mensaje procesado, notificando ");
 					m.notify();
 					}
+			}
+			else
+			{
+				System.out.println("CONSUM estas, reintentando");
+				Thread.yield();
 			}
 		}
 		else
@@ -41,7 +46,6 @@ public class Consumidor extends Thread
 			Thread.yield();
 		}
 		System.out.println("Todos los consumidor entregados, finalizando");
-		bc.anunciarRetiro();
 	}
 	
 }

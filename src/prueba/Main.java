@@ -13,7 +13,7 @@ public static String data = "./data/config.txt";
 	
 	public static void main(String[] args) 
 	{
-		// TODO Auto-generated method stub
+		// DONE Auto-generated method stub
 		File file = new File(data);
 		Integer[] attrib = new Integer[4];
 		try {
@@ -28,10 +28,10 @@ public static String data = "./data/config.txt";
 			  }
 			  		   
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// DONE Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// DONE Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -44,9 +44,11 @@ public static String data = "./data/config.txt";
 		Productor[] servs = new Productor[productores];
 		Consumidor[] clients = new Consumidor[consumidores];
 
-		BuzonProductor bp = new BuzonProductor(buzonProd, productores);
-		BuzonConsumidor bc = new BuzonConsumidor(buzonCons, consumidores);
+		BuzonProductor bp = new BuzonProductor(buzonProd);
+		BuzonConsumidor bc = new BuzonConsumidor(buzonCons);
 		BuzonIntermedio bi= new BuzonIntermedio();
+		Intermediario1 I1= new Intermediario1(bp, bi);
+		Intermediario2 I2= new Intermediario2(bi, bc);
 		for (int i = 0; i < productores/2; i++) 
 		{
 			servs[i] = new Productor(productos,bp,'A');
@@ -65,37 +67,43 @@ public static String data = "./data/config.txt";
 			clients[i] = new Consumidor(bc,'B');
 		}
 		
-		Intermediario1[] int1= new Intermediario1[productores];
-		Intermediario2[] int2= new Intermediario2[productores];
-		for (int i = 0; i < productores; i++) 
-		{
-			int1[i] = new Intermediario1(bp,bi);
-		}
+//		Intermediario1[] int1= new Intermediario1[productores];
+//		Intermediario2[] int2= new Intermediario2[productores];
 		
-		for (int i = 0; i < productores; i++) 
-		{
-			int2[i] = new Intermediario2(bi,bc);
-		}
+//		for (int i = 0; i < productores; i++) 
+//		{
+//			int1[i] = new Intermediario1(bp,bi);
+//		}
+		
+//		for (int i = 0; i < productores; i++) 
+//		{
+//			int2[i] = new Intermediario2(bi,bc);
+//		}
 		
 		for (int i = 0; i < productores; i++) 
 		{
 			servs[i].start();
 		}
 		
-		for (int i = 0; i < productores; i++) 
-		{
-			int1[i].start();
-		}
+		I1.start();
+		I2.start();
 		
-		for (int i = 0; i < productores; i++) 
-		{
-			int2[i].start();
-		}
+//		for (int i = 0; i < productores; i++) 
+//		{
+//			int1[i].start();
+//		}
+		
+//		for (int i = 0; i < productores; i++) 
+//		{
+//			int2[i].start();
+//		}
 		
 		for (int i = 0; i < consumidores; i++) 
 		{
 			clients[i].start();
 		}
+	
+		
 	}
 
 }

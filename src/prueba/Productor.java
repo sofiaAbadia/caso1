@@ -18,31 +18,31 @@ public class Productor extends Thread
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		this.crearConsultas();
+		// Done Auto-generated method stub
+		this.crearProducto();
 	}
 	
-	private void crearConsultas()
+	private void crearProducto()
 	{
 		for(int i = 0; i < numProd; i++)
 		{
 			Producto m = new Producto(tipo);
 			synchronized (m) 
 			{
-				if(bp.almacenarMensaje(m))
+				if(bp.almacenarProducto(m))
 				{
-					System.out.println("Productor entregado");
+					System.out.println("Producto entregado");
 					m.notify();
-					bp.anunciarRetiro();
+					numProd--;
 				}
 				else
 				{
-					System.out.println("Productor no pudo ser entregado, reintentando");
+					System.out.println("Producto no pudo ser entregado, reintentando");
 					Thread.yield();
 				}
 			}
 			
 		}
-		System.out.println("Todos los Productor entregados, finalizando");
+		System.out.println("Todos los Productos han sido entregados, finalizando");
 	}
 }

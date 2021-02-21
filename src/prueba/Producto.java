@@ -6,11 +6,11 @@ private char tipo;
 	
 	public Producto(char tipo) 
 	{
-		// TODO Auto-generated constructor stub
+		// Done Auto-generated constructor stub
 		this.tipo =tipo;
 	}
 
-	public char getMensaje() {
+	public char getTipo() {
 		return tipo;
 	}
 }

@@ -5,48 +5,41 @@ import java.util.LinkedList;
 public class BuzonProductor 
 {
 	private int capacidad;
-	
-	private int productores;
-
 	private LinkedList<Producto> producto;
 	
-	public BuzonProductor(int capacidad, int clientes) 
+	public BuzonProductor(int capacidad) 
 	{
-		// TODO Auto-generated constructor stub
+		// DONE Auto-generated constructor stub
 		this.capacidad = capacidad;
 		this.producto = new LinkedList<Producto>();
-		this.productores = clientes;
 	}
 	
-	public synchronized boolean almacenarMensaje(Producto m)
+	public synchronized boolean almacenarProducto(Producto m)
 	{
-		capacidad--;
-		if(capacidad < 0)
+		
+		if(capacidad <= 0)
 		{
-			System.out.println("BP Capacidad Excedida, buffer lleno");
+			System.out.println("BP Capacidad Excedida, Buzón Productores lleno");
 			return false;
 		}
 		else
 		{
 			System.out.println("BP Mensaje almacenado, espera por procesar");
 			this.producto.add(m);
+			capacidad--;
 			return true;
 		}
 	}
 	
-	public synchronized Producto obtenerMensaje()
+	public synchronized Producto obtenerProducto()
 	{
+		capacidad++;
 		return this.producto.poll();
 	}
-	
-	public synchronized void anunciarRetiro()
+
+	public synchronized int obtenerProductosActuales()
 	{
-		productores--;
-	}
-	
-	public synchronized int obtenerClientesActuales()
-	{
-		System.out.println("Productores en linea: " + this.productores);
-		return this.productores;
+		System.out.println("Productos actuales: " + producto.size());
+		return producto.size();
 	}
 }

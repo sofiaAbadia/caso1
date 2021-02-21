@@ -6,17 +6,17 @@ public class Intermediario2 extends Thread
 	private BuzonIntermedio bi;
 	private BuzonConsumidor bc;
 	
-	public Intermediario2(BuzonIntermedio buffer, BuzonConsumidor bc) 
+	public Intermediario2(BuzonIntermedio pBi, BuzonConsumidor bc) 
 	{
-		// TODO Auto-generated constructor stub
-		this.bi = buffer;
+		//DONE Auto-generated constructor stub
+		this.bi = pBi;
 		this.bc=bc;
 	}
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		if (bi.obtenerClientesActuales() != 0)
+		//DONE Auto-generated method stub
+		if (bi.obtenerProductosActuales() != 1)
 		{
 			procesarMensaje();
 		}
@@ -24,18 +24,18 @@ public class Intermediario2 extends Thread
 	
 	private void procesarMensaje()
 	{
-		Producto m = bi.obtenerMensaje();
+		Producto m = bi.obtenerProducto();
 		
 		if(m != null)
 		{
 			synchronized (m) {
-				if(bc.almacenarMensaje(m))
+				if(bc.almacenarProducto(m))
 				{
 					try {
 						System.out.println("INTER2 entregado");
 						m.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						// DONE Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
